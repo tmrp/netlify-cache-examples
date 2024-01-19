@@ -1,15 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true,
+    loader: 'default',
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.pokemonctg.io',
-      },
-      {
-        protocol: 'https',
-        hostname: 'pokemonctg.io',
+        hostname: 'images.pokemontcg.io',
       },
     ],
   },

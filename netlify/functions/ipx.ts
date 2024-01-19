@@ -5,11 +5,7 @@ export const handler = createIPXHandler({
   remotePatterns: [
     {
       protocol: 'https',
-      hostname: 'images.pokemontcg.io',
-    },
-    {
-      protocol: 'https',
-      hostname: 'pokemonctg.io',
+      hostname: 'pokemontcg.io',
     },
   ],
 });
