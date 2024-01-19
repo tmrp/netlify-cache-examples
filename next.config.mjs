@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.pokemontcg.io'],
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.pokemonctg.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pokemonctg.io',
+      },
+    ],
   },
 };
 

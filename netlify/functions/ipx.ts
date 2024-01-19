@@ -7,5 +7,9 @@ export const handler = createIPXHandler({
       protocol: 'https',
       hostname: 'images.pokemontcg.io',
     },
+    {
+      protocol: 'https',
+      hostname: 'pokemonctg.io',
+    },
   ],
 });

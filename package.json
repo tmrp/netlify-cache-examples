@@ -1,7 +1,7 @@
 {
   "name": "netlify-cache-examples",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,7 +15,7 @@
     "@netlify/ipx": "^1.4.6",
     "@netlify/plugin-nextjs": "^4.41.3",
     "follow-redirects": "^1.15.5",
-    "next": "^13.5.6",
+    "next": "14.1.0",
     "pokemontcgsdk": "^2.0.0",
     "react": "^18",
     "react-dom": "^18"
