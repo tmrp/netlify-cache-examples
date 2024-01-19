@@ -13,6 +13,7 @@
     "@netlify/edge-functions": "^2.3.0",
     "@netlify/functions": "^2.5.0",
     "@netlify/plugin-nextjs": "^4.41.3",
+    "follow-redirects": "^1.15.5",
     "next": "14.1.0",
     "pokemontcgsdk": "^2.0.0",
     "react": "^18",
