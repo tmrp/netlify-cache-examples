@@ -3,7 +3,12 @@ import type { Config, Context } from '@netlify/edge-functions';
 
 export const config: Config = {
   path: '/*',
-  excludedPath: ['/.netlify/functions/*', '/_next/*', '/favicon.ico'],
+  excludedPath: [
+    '/.netlify/functions/*',
+    '/_ipx/*',
+    '/_next/*',
+    '/favicon.ico',
+  ],
 };
 
 export default async function CacheEdge(req: Request, context: Context) {
