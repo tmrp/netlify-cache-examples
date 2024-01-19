@@ -1,6 +1,9 @@
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 
+[function]
+node_bundler = "esbuild"
+
 [[edge_functions]]
 path = "/*"
 function ="cache-edge"
@@ -9,6 +12,10 @@ function ="cache-edge"
 targetPort = 3000
 edge_functions = "netlify/edge-functions"
 functions = "netlify/functions"
+excludedPath = ["/_next/*"]
 
 [build]
 publish = ".next"
+edge_functions = "netlify/edge-functions"
+functions = "netlify/functions"
+excludedPath = ["/_next/*"]
