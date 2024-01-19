@@ -1,9 +1,6 @@
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 
-[function]
-node_bundler = "esbuild"
-
 [[edge_functions]]
 path = "/*"
 function ="cache-edge"
