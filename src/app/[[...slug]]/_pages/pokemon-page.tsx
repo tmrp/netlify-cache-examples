@@ -1,6 +1,6 @@
-import { pokemonApi } from '@/lib/pokemon-api';
 import { PageWrapper } from '../_components/page-wrapper';
 import { Card } from '../_components/card';
+import { pokemonApi } from '../../../lib/pokemon-api';
 
 interface PokemonCard {
   id: string;
