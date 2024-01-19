@@ -11,22 +11,24 @@ export default async function CacheEdge(req: Request, context: Context) {
   const html = await response.text();
 
   const path = new URL(req.url).pathname;
-  const trimSlash = path.replace(/^\/|\/$/g, '');
 
-  console.log('Some_Path', trimSlash);
+  const pathToKey = path
+    .split('/')
+    .filter((x) => x)
+    .join(' ');
 
-  const store = getStore(trimSlash);
+  const store = getStore(pathToKey);
 
-  const check = await store.get(trimSlash);
+  const check = await store.get(pathToKey);
 
   if (!check) {
     // Store the HTML in the blob store
-    await store.set(trimSlash, html);
+    await store.set(pathToKey, html);
 
     return context.next();
   }
 
-  const htmlBlob = await store.get(trimSlash);
+  const htmlBlob = await store.get(pathToKey);
 
   return new Response(htmlBlob, {
     headers: { 'content-type': 'text/html', 'x-data-source': 'Netlify-Blob' },
