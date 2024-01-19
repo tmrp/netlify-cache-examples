@@ -17,6 +17,10 @@ export default async function CacheEdge(req: Request, context: Context) {
 
   const path = new URL(req.url).pathname;
 
+  if (!path || path === '/') {
+    return context.next();
+  }
+
   const pathToKey = path
     .split('/')
     .filter((x) => x)
@@ -24,17 +28,15 @@ export default async function CacheEdge(req: Request, context: Context) {
 
   const store = getStore(pathToKey);
 
-  const hasBlob = await store.get(pathToKey);
+  const dataBlob = await store.get(pathToKey);
 
-  if (!hasBlob) {
+  if (!dataBlob) {
     const dateTime = new Date().toUTCString();
 
     await store.set(pathToKey, html, { metadata: { timeStamp: dateTime } });
 
     return context.next();
   }
-
-  const htmlBlob = await store.get(pathToKey);
 
   const meta = await store.getMetadata(pathToKey);
 
@@ -60,7 +62,11 @@ export default async function CacheEdge(req: Request, context: Context) {
     return context.next();
   }
 
-  return new Response(htmlBlob, {
-    headers: { 'content-type': 'text/html', 'x-data-source': 'Netlify-Blob' },
+  return new Response(dataBlob, {
+    headers: {
+      'content-type': 'text/html',
+      'x-data-source': 'Netlify-Blob',
+      'x-blob-age': `${minutes} minutes`,
+    },
   });
 }
