@@ -39,7 +39,7 @@ export default async function CacheEdge(req: Request, context: Context) {
   const meta = await store.getMetadata(pathToKey);
 
   if (!meta?.metadata?.timeStamp) {
-    store.delete(pathToKey);
+    await store.delete(pathToKey);
 
     return context.next();
   }
@@ -55,7 +55,7 @@ export default async function CacheEdge(req: Request, context: Context) {
   const minutes = Math.floor(diff / 1000 / 60);
 
   if (minutes > 15) {
-    store.delete(pathToKey);
+    await store.delete(pathToKey);
 
     return context.next();
   }
