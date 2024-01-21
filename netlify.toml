@@ -9,10 +9,12 @@ function ="cache-edge"
 targetPort = 3000
 edge_functions = "netlify/edge-functions"
 functions = "netlify/functions"
+builders = "netlify/builders"
 excludedPath = ["/_next/*"]
 
 [build]
 publish = ".next"
 edge_functions = "netlify/edge-functions"
 functions = "netlify/functions"
+builders = "netlify/builders"
 excludedPath = ["/_next/*"]
