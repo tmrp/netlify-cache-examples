@@ -8,14 +8,7 @@ interface Props {
 export const Card = ({ imageSrc, imageAlt }: Props) => {
   return (
     <div className="relative w-60 h-80">
-      <Image
-        src={imageSrc}
-        alt={imageAlt}
-        fill
-        sizes="100vw"
-        objectFit="contain"
-        quality={100}
-      />
+      <Image src={imageSrc} alt={imageAlt} fill sizes="100vw" quality={100} />
     </div>
   );
 };

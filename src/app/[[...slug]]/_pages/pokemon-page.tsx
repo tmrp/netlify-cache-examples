@@ -1,6 +1,10 @@
+import { headers } from 'next/headers';
+import { getStore } from '@netlify/blobs';
+
 import { PageWrapper } from '../_components/page-wrapper';
 import { Card } from '../_components/card';
 import { pokemonApi } from '../../../lib/pokemon-api';
+import { getPokemon } from '../../../lib/get-pokemon';
 
 interface PokemonCard {
   id: string;
@@ -11,19 +15,21 @@ interface PokemonCard {
 }
 
 async function GetPokemon(slug: string[]) {
-  const getPokemons = slug?.map((slug) => pokemonApi({ name: slug }));
+  const getPokemons = slug?.map((slug) =>
+    getPokemon({
+      pokemonName: slug,
+    })
+  );
 
   const results = getPokemons && (await Promise.allSettled(getPokemons));
 
-  const fulfilledResults = results?.map((result) => {
-    if (result.status !== 'fulfilled') {
-      return result.reason;
+  const fulFilledResults = results.map((fulFilledResult) => {
+    if (fulFilledResult?.status === 'fulfilled') {
+      return fulFilledResult?.value;
     }
-
-    return result.value;
   });
 
-  return fulfilledResults;
+  return fulFilledResults;
 }
 
 export default async function PokemonPage({
