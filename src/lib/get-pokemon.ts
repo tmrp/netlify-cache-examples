@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 
-import { pokemonApi } from './pokemon-api';
+import { pokemonApi } from './clients/pokemon-api';
 
 interface Props {
   pokemonName: string;

@@ -1,9 +1,6 @@
-import { headers } from 'next/headers';
-import { getStore } from '@netlify/blobs';
-
 import { PageWrapper } from '../_components/page-wrapper';
 import { Card } from '../_components/card';
-import { pokemonApi } from '../../../lib/pokemon-api';
+
 import { getPokemon } from '../../../lib/get-pokemon';
 
 interface PokemonCard {
