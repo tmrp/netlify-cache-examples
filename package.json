@@ -14,11 +14,17 @@
     "@netlify/functions": "^2.5.0",
     "@netlify/ipx": "^1.4.6",
     "@netlify/plugin-nextjs": "^4.41.3",
+    "@tanstack/react-query": "^5.17.19",
+    "@trpc/client": "11.0.0-next-beta.228",
+    "@trpc/next": "11.0.0-next-beta.228",
+    "@trpc/react-query": "11.0.0-next-beta.228",
+    "@trpc/server": "11.0.0-next-beta.228",
     "follow-redirects": "^1.15.5",
     "next": "14.1.0",
     "pokemontcgsdk": "^2.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
