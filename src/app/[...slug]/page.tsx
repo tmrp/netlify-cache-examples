@@ -1,5 +1,5 @@
 import { Card } from '../../components/card';
-import { PageWrapper } from '../../components/page-wrapper';
+
 import { api } from '../../trpc/server/trpc-api';
 
 interface PokemonCard {
@@ -36,21 +36,19 @@ export default async function PokemonPage({
   const data = await GetPokemon(slug);
 
   return (
-    <PageWrapper>
-      <ul className="flex flex-row gap-4 w-full flex-wrap">
-        {data?.map((pokemon) =>
-          pokemon?.data?.map((pokemon: PokemonCard) => {
-            return (
-              <li key={pokemon.id} className="">
-                <Card
-                  imageSrc={pokemon.images.large}
-                  imageAlt={`${pokemon.name} illustrated playing card`}
-                />
-              </li>
-            );
-          })
-        )}
-      </ul>
-    </PageWrapper>
+    <ul className="flex flex-row gap-4 w-full flex-wrap">
+      {data?.map((pokemon) =>
+        pokemon?.data?.map((pokemon: PokemonCard) => {
+          return (
+            <li key={pokemon.id} className="">
+              <Card
+                imageSrc={pokemon.images.large}
+                imageAlt={`${pokemon.name} illustrated playing card`}
+              />
+            </li>
+          );
+        })
+      )}
+    </ul>
   );
 }
