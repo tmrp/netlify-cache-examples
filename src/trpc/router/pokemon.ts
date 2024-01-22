@@ -13,16 +13,32 @@ export const pokemonRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      const response = await fetch(
-        `https://api.pokemontcg.io/v2/cards?q=name:${input.pokemonName}`,
-        {
-          method: 'GET',
-          headers: {
-            'X-Api-Key': process.env.POKEMON_TCG_API_KEY ?? '',
-          },
-        }
-      );
+      const blobStore = ctx.netlifyBlobs(input.pokemonName);
+      const blob = await blobStore.get(input.pokemonName);
+      const parsedBlob = await JSON.parse(blob);
 
-      return response.json();
+      if (!parsedBlob || !parsedBlob?.data.length) {
+        const freshResponse = await fetch(
+          `https://api.pokemontcg.io/v2/cards?q=name:${input.pokemonName}`,
+          {
+            method: 'GET',
+            headers: {
+              'X-Api-Key': process.env.POKEMON_TCG_API_KEY ?? '',
+            },
+          }
+        );
+
+        const data = await freshResponse.json();
+
+        await blobStore.setJSON(input.pokemonName, data, {
+          metadata: {
+            timeStamp: new Date().toISOString(),
+          },
+        });
+
+        return data;
+      }
+
+      return await JSON.parse(blob);
     }),
 });
