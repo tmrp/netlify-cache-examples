@@ -1,20 +1,14 @@
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 
-[[edge_functions]]
-path = "/*"
-function ="cache-edge"
-
 [dev]
 targetPort = 3000
 edge_functions = "netlify/edge-functions"
 functions = "netlify/functions"
-builders = "netlify/builders"
 excludedPath = ["/_next/*"]
 
 [build]
 publish = ".next"
 edge_functions = "netlify/edge-functions"
 functions = "netlify/functions"
-builders = "netlify/builders"
 excludedPath = ["/_next/*"]
