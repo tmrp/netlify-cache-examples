@@ -1,11 +1,11 @@
-import { createTRPCClientProxy, httpBatchLink, loggerLink } from '@trpc/client';
+import { createTRPCClient, httpBatchLink, loggerLink } from '@trpc/client';
 
 import { headers } from 'next/headers';
 import { trpcRouter } from '../types';
 import { getUrl } from '../utils/get-url';
 import { transformer } from '../utils/transformer';
 
-export const api = createTRPCClientProxy<trpcRouter>({
+export const api = createTRPCClient<trpcRouter>({
   transformer,
   links: [
     loggerLink({
