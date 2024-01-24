@@ -6,6 +6,8 @@ export const config: Config = {
     "/.netlify/functions/*",
     "/_next/*",
     "/__nextjs_original-stack-frame",
+    "/_ipx/*",
+    "/favicon.ico",
   ],
   path: "/*",
 };
