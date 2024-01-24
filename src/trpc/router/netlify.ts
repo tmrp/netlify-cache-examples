@@ -4,7 +4,6 @@ import {
   createTRPCRouter,
   publicProcedure,
 } from "../server/trpc-server-config";
-import { headers } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
