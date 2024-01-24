@@ -27,8 +27,7 @@ export const createTRPCContext = async (opts: { req: NextRequest }) => {
 };
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: superjson,
-  errorFormatter({ shape, error }) {
+  errorFormatter({ error, shape }) {
     return {
       ...shape,
       data: {
@@ -38,6 +37,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       },
     };
   },
+  transformer: superjson,
 });
 
 export const createTRPCRouter = t.router;

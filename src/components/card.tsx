@@ -1,14 +1,21 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface Props {
   imageSrc: string;
   imageAlt: string;
 }
 
-export const Card = ({ imageSrc, imageAlt }: Props) => {
+export const Card = ({ imageAlt, imageSrc }: Props) => {
   return (
-    <div className="relative w-60 h-80">
-      <Image src={imageSrc} alt={imageAlt} fill sizes="100vw" quality={100} />
+    <div className="relative">
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        width="0"
+        height="0"
+        sizes="100vw"
+        className="w-full"
+      />
     </div>
   );
 };

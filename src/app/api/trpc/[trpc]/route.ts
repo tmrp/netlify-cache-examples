@@ -6,18 +6,18 @@ import { createTRPCContext } from '../../../../trpc/server/trpc-server-config';
 
 const handler = (request: NextRequest) =>
   fetchRequestHandler({
-    endpoint: '/api/trpc',
-    req: request,
-    router: trpcRouter,
     createContext: () => createTRPCContext({ req: request }),
+    endpoint: '/api/trpc',
     onError:
       process.env.NODE_ENV === 'development'
-        ? ({ path, error }) => {
+        ? ({ error, path }) => {
             console.error(
               `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`
             );
           }
         : undefined,
+    req: request,
+    router: trpcRouter,
   });
 
 export { handler as GET, handler as POST };
