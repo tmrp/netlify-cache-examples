@@ -13,8 +13,7 @@ export default async function VariedPage() {
         <div className="rounded-md bg-pink-200 p-2">
           <div>
             <TypographyH2>
-              This response has been made with a Netlify On Demand builder
-              function
+              This response has been made with a Netlify Edge Function
             </TypographyH2>
             <TypographyP>
               This data was generated on {cards.timeStamp}

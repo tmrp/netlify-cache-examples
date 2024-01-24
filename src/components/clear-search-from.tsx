@@ -74,7 +74,7 @@ export function ClearSearchForm() {
                 <div className="mb-4">
                   <FormLabel className="text-base">Queries</FormLabel>
                   <FormDescription>
-                    Select the items you want to display in the sidebar.
+                    Select the items you want to remove from the results.
                   </FormDescription>
                 </div>
                 {pathnameToArray.map((item) => (
