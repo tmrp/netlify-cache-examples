@@ -21,7 +21,6 @@ const myHandler: Handler = async (event, context) => {
   return {
     body: JSON.stringify({ data, timeStamp, type: randomType }),
     headers: {
-      "Cache-Control": "max-age=3600, public",
       "Content-Type": "application/json",
       "Netlify-Vary": "query",
     },
