@@ -12,13 +12,6 @@ export const netlifyRouter = createTRPCRouter({
   onDemand: publicProcedure.query(async ({ ctx }) => {
     const response = await fetch(
       `${BASE_URL}/.netlify/builders/on-demand-builder`,
-      {
-        headers: {
-          "Netlify-Vary": "query",
-          Vary: "Accept-Encoding",
-        },
-        method: "GET",
-      },
     );
 
     const cardDataScheme = z.object({
