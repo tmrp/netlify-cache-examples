@@ -16,11 +16,14 @@ const myHandler: Handler = async (event, context) => {
 
   const { data } = await getCardsByType.json();
 
+  const timeStamp = new Date().toUTCString();
+
   return {
-    body: JSON.stringify({ data, type: randomType }),
+    body: JSON.stringify({ data, timeStamp, type: randomType }),
     headers: {
       "Cache-Control": "max-age=3600, public",
       "Content-Type": "application/json",
+      "Netlify-Vary": "query",
     },
     statusCode: 200,
     ttl: 3600,
