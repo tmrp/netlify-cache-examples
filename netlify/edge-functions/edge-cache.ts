@@ -9,7 +9,7 @@ export const config: Config = {
     "/_ipx/*",
     "/favicon.ico",
   ],
-  path: "/*",
+  path: "/varied/*",
 };
 
 export default async function EdgeCache(request: Request, context: Context) {

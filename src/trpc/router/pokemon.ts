@@ -41,4 +41,36 @@ export const pokemonRouter = createTRPCRouter({
 
       return { ...parsedBlob, blobData: true };
     }),
+  getRandomPokemonCardsByType: publicProcedure.query(async ({ ctx }) => {
+    const getTypes = await fetch("https://api.pokemontcg.io/v2/types");
+
+    const typesResponse = await getTypes.json();
+
+    const randomType =
+      typesResponse.data[Math.floor(Math.random() * typesResponse.data.length)];
+
+    const getCardsByType = await fetch(
+      `https://api.pokemontcg.io/v2/cards?q=types:${randomType}&page=1&pageSize=10`,
+    );
+
+    const data = await getCardsByType.json();
+
+    const cardDataScheme = z.object({
+      data: z.array(
+        z.object({
+          id: z.string(),
+          images: z.object({
+            small: z.string(),
+          }),
+          name: z.string(),
+        }),
+      ),
+    });
+
+    const cards = cardDataScheme.parse(await data);
+
+    const timeStamp = new Date().toUTCString();
+
+    return { ...cards, randomType, timeStamp };
+  }),
 });
