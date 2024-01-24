@@ -6,7 +6,6 @@ import { getUrl } from '../utils/get-url';
 import { transformer } from '../utils/transformer';
 
 export const api = createTRPCClient<trpcRouter>({
-  transformer,
   links: [
     loggerLink({
       enabled: (op) =>
@@ -14,12 +13,13 @@ export const api = createTRPCClient<trpcRouter>({
         (op.direction === 'down' && op.result instanceof Error),
     }),
     httpBatchLink({
-      url: getUrl(),
       headers() {
         const heads = new Map(headers());
         heads.set('x-trpc-source', 'react');
         return Object.fromEntries(heads);
       },
+      url: getUrl(),
     }),
   ],
+  transformer,
 });

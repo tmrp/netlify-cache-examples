@@ -22,17 +22,17 @@ export const TrpcClientProvider: React.FC<TrpcClientProviderProps> = ({
   const queryClientRef = useRef(new QueryClient());
   const trpcClientRef = useRef(
     apiReact.createClient({
-      transformer,
       links: [
         httpBatchLink({
-          url: getUrl(),
           headers() {
             const heads = new Map(headers);
             heads.set('x-trpc-source', 'react');
             return Object.fromEntries(heads);
           },
+          url: getUrl(),
         }),
       ],
+      transformer,
     })
   );
 
