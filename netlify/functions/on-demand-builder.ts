@@ -22,7 +22,10 @@ const myHandler: Handler = async (event, context) => {
     body: JSON.stringify({ data, timeStamp, type: randomType }),
     headers: {
       "Content-Type": "application/json",
+      "Netlify-CDN-Cache-Control":
+        "public, max-age=0, stale-while-revalidate=604800",
       "Netlify-Vary": "query",
+      Vary: "Accept-Encoding",
     },
     statusCode: 200,
     ttl: 3600,
