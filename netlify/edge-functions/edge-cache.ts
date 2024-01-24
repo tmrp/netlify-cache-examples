@@ -19,8 +19,10 @@ export default async function EdgeCache(request: Request, context: Context) {
 
   return new Response(html, {
     headers: {
-      "Cdn-Cache-Control": "public, s-maxage=31536000, must-revalidate",
+      "Cache-Control": "public, max-age=300",
+      "Cdn-Cache-Control": "public, max-age=300",
       "Content-Type": "text/html",
+      "Netlify-Cache-Control": "public, max-age=300",
       "Netlify-Vary": "query",
     },
     status: 200,
