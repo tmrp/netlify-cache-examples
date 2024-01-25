@@ -44,9 +44,13 @@ async function GetPokemon(searchQuery: string) {
 export default async function PokemonPage({
   searchParams,
 }: {
-  searchParams: any;
+  searchParams: {
+    search?: string;
+  };
 }) {
   const search = searchParams?.search ?? "";
+
+  console.log("search_params", search);
 
   const data = await GetPokemon(search);
 

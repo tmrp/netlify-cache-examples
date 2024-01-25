@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getStore } from "@netlify/blobs";
 
 export const netlifyBlobs = (storeName: string) => {
   const store = getStore({

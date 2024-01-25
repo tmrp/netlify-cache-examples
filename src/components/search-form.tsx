@@ -26,7 +26,7 @@ const formSchema = z.object({
   }),
 });
 
-export function SearchForm() {
+export const SearchForm = () => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,12 +38,13 @@ export function SearchForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const query = transformToSearchQuery(values?.pokemonCard ?? "");
+    const params = query.toString();
 
     if (!query) {
       return router.push("/");
     }
 
-    return router.push(`/cards?search=${query}`);
+    return router.push(`cards?search=${params.toString()}`);
   }
 
   return (
@@ -72,4 +73,4 @@ export function SearchForm() {
       </Form>
     </div>
   );
-}
+};
