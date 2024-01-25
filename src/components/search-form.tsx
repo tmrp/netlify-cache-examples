@@ -28,6 +28,7 @@ const formSchema = z.object({
 
 export function SearchForm() {
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       pokemonCard: "",
@@ -39,11 +40,9 @@ export function SearchForm() {
     const query = transformToSearchQuery(values.pokemonCard);
 
     if (!query) {
-      router.refresh();
       return router.push("/");
     }
 
-    router.refresh();
     return router.push(`/cards?search=${query}`);
   }
 
