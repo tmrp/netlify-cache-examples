@@ -15,8 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "components/ui/form";
-import { toast } from "components/ui/use-toast";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -53,10 +54,12 @@ export function ClearSearchForm() {
       (item) => !data.items.includes(item),
     );
 
-    if (!newSearchQuery || !newSearchQuery.length) {
+    if (!newSearchQuery.length) {
+      revalidatePath("/");
       return router.push("/");
     }
 
+    revalidatePath(`/cards?search=${newSearchQuery.join(" ")}`);
     return router.push(`/cards?search=${newSearchQuery.join(" ")}`);
   }
 
