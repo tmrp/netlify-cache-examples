@@ -15,8 +15,9 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
-const transformToPath = (value: string) => {
-  return value.toLowerCase().replace(/ /g, "/");
+const transformToSearchQuery = (pokemonCard: string) => {
+  const searchQuery = pokemonCard.replace(/\s/g, "+");
+  return searchQuery;
 };
 
 const formSchema = z.object({
@@ -35,8 +36,8 @@ export function SearchForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const toPath = transformToPath(values.pokemonCard);
-    router.push(`/${toPath}`);
+    const toPath = transformToSearchQuery(values.pokemonCard);
+    router.push(`/cards?search=${toPath}`);
   }
   return (
     <div className="rounded-md bg-slate-200 p-2">
