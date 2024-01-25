@@ -46,7 +46,7 @@ export default async function PokemonPage({
 }: {
   searchParams: any;
 }) {
-  const search = searchParams?.search;
+  const search = searchParams?.search ?? "";
 
   const data = await GetPokemon(search);
 
@@ -58,10 +58,10 @@ export default async function PokemonPage({
             key={index}
             className={cn(
               "flex w-full flex-row flex-wrap gap-4 rounded-md p-2",
-              pokemon.blobData ? "bg-green-300" : "bg-red-200",
+              pokemon?.blobData ? "bg-green-300" : "bg-red-200",
             )}
           >
-            {isBlobData(pokemon.blobData)}
+            {isBlobData(pokemon?.blobData)}
             <ul className={cn("flex w-full flex-row flex-wrap gap-4")}>
               {pokemon?.data?.map((pokemon: PokemonCard) => (
                 <li key={pokemon.id} className="">

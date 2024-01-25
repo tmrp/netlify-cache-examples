@@ -58,7 +58,6 @@ export function ClearSearchForm() {
       return router.push("/");
     }
 
-    // revalidatePath(`/cards?search=${newSearchQuery.join(" ")}`);
     return router.push(`/cards?search=${newSearchQuery.join(" ")}`);
   }
 
