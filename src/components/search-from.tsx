@@ -35,7 +35,8 @@ export function SearchForm() {
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>, event: any) {
+    event.preventDefault();
     const toPath = transformToSearchQuery(values.pokemonCard);
     router.push(`/cards?search=${toPath}`);
   }
