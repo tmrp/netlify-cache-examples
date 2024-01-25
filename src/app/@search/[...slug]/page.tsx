@@ -1,5 +1,5 @@
 import { ClearSearchForm } from "components/clear-search-from";
-import { SearchForm } from "components/search-from";
+import { SearchForm } from "components/search-form";
 
 export default function SearchPage() {
   return (

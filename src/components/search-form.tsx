@@ -36,8 +36,13 @@ export function SearchForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const toPath = transformToSearchQuery(values.pokemonCard);
-    router.push(`/cards?search=${toPath}`);
+    const query = transformToSearchQuery(values.pokemonCard);
+
+    if (!query) {
+      return router.push("/");
+    }
+
+    return router.push(`/cards?search=${query}`);
   }
 
   return (
