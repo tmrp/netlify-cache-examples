@@ -24,9 +24,9 @@ async function GetPokemon(searchQuery: string) {
   const stringToArray = searchQuery?.split(" ");
 
   const getPokemons = stringToArray?.map(
-    async (searchQuery) =>
+    async (query) =>
       await api.pokemon.getPokemonCardsByName.query({
-        pokemonName: searchQuery,
+        pokemonName: query,
       }),
   );
 

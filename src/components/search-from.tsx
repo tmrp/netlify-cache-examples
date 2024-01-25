@@ -39,6 +39,7 @@ export function SearchForm() {
     const toPath = transformToSearchQuery(values.pokemonCard);
     router.push(`/cards?search=${toPath}`);
   }
+
   return (
     <div className="rounded-md bg-slate-200 p-2">
       <Form {...form}>
