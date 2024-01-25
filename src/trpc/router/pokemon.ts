@@ -5,6 +5,18 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
+const cardDataScheme = z.object({
+  data: z.array(
+    z.object({
+      id: z.string(),
+      images: z.object({
+        small: z.string(),
+      }),
+      name: z.string(),
+    }),
+  ),
+});
+
 export const pokemonRouter = createTRPCRouter({
   getPokemonCardsByName: publicProcedure
     .input(
@@ -39,6 +51,8 @@ export const pokemonRouter = createTRPCRouter({
         return { ...data, blobData: false };
       }
 
+      const validate = cardDataScheme.parse(parsedBlob);
+
       return { ...parsedBlob, blobData: true };
     }),
 
@@ -55,18 +69,6 @@ export const pokemonRouter = createTRPCRouter({
     );
 
     const data = await getCardsByType.json();
-
-    const cardDataScheme = z.object({
-      data: z.array(
-        z.object({
-          id: z.string(),
-          images: z.object({
-            small: z.string(),
-          }),
-          name: z.string(),
-        }),
-      ),
-    });
 
     const cards = cardDataScheme.parse(await data);
 
