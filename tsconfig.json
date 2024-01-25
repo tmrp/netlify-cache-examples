@@ -14,21 +14,21 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next"
-      }
+        "name": "next",
+      },
     ],
     "baseUrl": "./src",
     "paths": {
       "components/*": ["components/*"],
-      "lib/*": ["lib/*"]
-    }
+      "lib/*": ["lib/*"],
+    },
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "netlify/functions/pokemon-cache.ts"
+    "netlify/functions/pokemon-cache.ts",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
