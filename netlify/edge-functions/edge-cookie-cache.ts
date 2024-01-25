@@ -26,7 +26,7 @@ export default async function EdgeCookieCache(
       "Cdn-Cache-Control": "public, max-age=300",
       "Content-Type": "text/html",
       "Netlify-Cache-Control": "public, max-age=300",
-      "Netlify-Vary": "cookie=one|two",
+      "Netlify-Vary": "cookie=PokeCache",
     },
     status: 200,
   });
