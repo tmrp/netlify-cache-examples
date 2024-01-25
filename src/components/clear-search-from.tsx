@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import path from "path";
+
 import { Button } from "components/ui/button";
 import { Checkbox } from "components/ui/checkbox";
 import {
@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "components/ui/form";
 import { toast } from "components/ui/use-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -25,8 +25,11 @@ const FormSchema = z.object({
 });
 
 export function ClearSearchForm() {
-  const pathname = usePathname();
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const searchQueryParms = searchParams.get("search");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
@@ -35,28 +38,26 @@ export function ClearSearchForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  const pathnameToArray = pathname.split("/").filter(Boolean);
+  if (!searchQueryParms || !searchQueryParms.length) {
+    return null;
+  }
 
-  if (!pathnameToArray.length) {
+  const searchParamsToArray = searchQueryParms?.split(" ").filter(Boolean);
+
+  if (!searchParamsToArray?.length) {
     return null;
   }
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const newSearch = pathnameToArray.filter(
-      (path) => path !== data.items.find((item) => item === path),
+    const newSearchQuery = searchParamsToArray?.filter(
+      (item) => !data.items.includes(item),
     );
 
-    router.push(path.join("/", ...newSearch));
+    if (!newSearchQuery || !newSearchQuery.length) {
+      return router.push("/");
+    }
 
-    toast({
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{data.items}</code>
-        </pre>
-      ),
-      duration: 500,
-      title: "The following search query will be removed:",
-    });
+    return router.push(`/cards?search=${newSearchQuery.join(" ")}`);
   }
 
   return (
@@ -77,7 +78,7 @@ export function ClearSearchForm() {
                     Select the items you want to remove from the results.
                   </FormDescription>
                 </div>
-                {pathnameToArray.map((item) => (
+                {searchParamsToArray.map((item) => (
                   <FormField
                     key={item}
                     control={form.control}
