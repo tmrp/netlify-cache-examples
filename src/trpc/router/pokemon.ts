@@ -41,6 +41,7 @@ export const pokemonRouter = createTRPCRouter({
 
       return { ...parsedBlob, blobData: true };
     }),
+
   getRandomPokemonCardsByType: publicProcedure.query(async ({ ctx }) => {
     const getTypes = await fetch("https://api.pokemontcg.io/v2/types");
 
