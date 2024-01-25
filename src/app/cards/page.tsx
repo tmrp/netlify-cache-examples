@@ -20,10 +20,14 @@ const isBlobData = (blobData: boolean) => {
   return <span className="rounded-sm bg-red-300 p-2">Cached Response</span>;
 };
 
-async function GetPokemon(slug: string[]) {
-  const getPokemons = slug?.map(
-    async (slug) =>
-      await api.pokemon.getPokemonCardsByName.query({ pokemonName: slug }),
+async function GetPokemon(searchQuery: string) {
+  const stringToArray = searchQuery?.split(" ");
+
+  const getPokemons = stringToArray?.map(
+    async (searchQuery) =>
+      await api.pokemon.getPokemonCardsByName.query({
+        pokemonName: searchQuery,
+      }),
   );
 
   const results = getPokemons && (await Promise.allSettled(getPokemons));
@@ -38,12 +42,12 @@ async function GetPokemon(slug: string[]) {
 }
 
 export default async function PokemonPage({
-  params,
+  searchParams,
 }: {
-  params: { slug: string[] };
+  searchParams: any;
 }) {
-  const { slug } = params;
-  const data = await GetPokemon(slug);
+  const { search } = searchParams;
+  const data = await GetPokemon(search);
 
   return (
     <div className="container relative">
