@@ -3,7 +3,12 @@ package = "@netlify/plugin-nextjs"
 
 [[edge_functions]]
 function = "edge-cache"
-path = "/*"
+path = "/varied"
+excludedPath = ["/_next/*"]
+
+[[edge_functions]]
+function = "edge-cache"
+path = "/cookie"
 excludedPath = ["/_next/*"]
 
 [dev]
