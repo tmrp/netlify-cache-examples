@@ -55,11 +55,10 @@ export function ClearSearchForm() {
     );
 
     if (!newSearchQuery.length) {
-      revalidatePath("/");
       return router.push("/");
     }
 
-    revalidatePath(`/cards?search=${newSearchQuery.join(" ")}`);
+    // revalidatePath(`/cards?search=${newSearchQuery.join(" ")}`);
     return router.push(`/cards?search=${newSearchQuery.join(" ")}`);
   }
 
