@@ -46,7 +46,8 @@ export default async function PokemonPage({
 }: {
   searchParams: any;
 }) {
-  const { search } = searchParams;
+  const search = searchParams?.search;
+
   const data = await GetPokemon(search);
 
   return (
