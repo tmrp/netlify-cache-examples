@@ -1,6 +1,7 @@
 import { cn } from "lib/utils";
 import { Card } from "../../components/card";
 import { api } from "../../trpc/server/trpc-api";
+import { PokeMonCardSearch } from "components/pokemon-card-search";
 
 interface PokemonCard {
   id: string;
@@ -55,7 +56,10 @@ export default async function PokemonPage({
 
   return (
     <div className="container relative">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-4">
+        <section className="flex flex-col gap-5">
+          <PokeMonCardSearch />
+        </section>
         {data?.map((pokemon, index) => (
           <div
             key={index}

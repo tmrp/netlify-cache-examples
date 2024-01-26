@@ -1,6 +1,7 @@
 import { Card } from "components/card";
 import { ClearSearchForm } from "components/forms/clear-search-from";
 import { SearchForm } from "components/forms/search-form";
+import { PokeMonCardSearch } from "components/pokemon-card-search";
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
 import { api } from "trpc/server/trpc-api";
@@ -10,33 +11,34 @@ export default async function HomePage() {
 
   return (
     <div className="container relative">
-      <section className="flex flex-col gap-5">
-        <ClearSearchForm />
-        <SearchForm />
-      </section>
-      {cardData && (
-        <div className="rounded-md bg-blue-200 p-2">
-          <div>
-            <TypographyH2>
-              This response has been made with a Netlify On Demand builder
-              function
-            </TypographyH2>
-            <TypographyP>
-              This data was generated on {cardData.timeStamp}
-            </TypographyP>
+      <div className="flex flex-col gap-4">
+        <section className="flex flex-col gap-5">
+          <PokeMonCardSearch />
+        </section>
+        {cardData && (
+          <div className="rounded-md bg-blue-200 p-2">
+            <div>
+              <TypographyH2>
+                This response has been made with a Netlify On Demand builder
+                function
+              </TypographyH2>
+              <TypographyP>
+                This data was generated on {cardData.timeStamp}
+              </TypographyP>
+            </div>
+            <ul className="flex flex-row flex-wrap gap-4">
+              {cardData.data.map((card) => (
+                <li key={card.id}>
+                  <Card
+                    imageSrc={card.images.small}
+                    imageAlt={`${card.name} illustrated playing card`}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="flex flex-row flex-wrap gap-4">
-            {cardData.data.map((card) => (
-              <li key={card.id}>
-                <Card
-                  imageSrc={card.images.small}
-                  imageAlt={`${card.name} illustrated playing card`}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

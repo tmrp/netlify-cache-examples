@@ -18,8 +18,6 @@ import {
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { useState } from "react";
-
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "You have to select at least one item.",
@@ -27,8 +25,6 @@ const FormSchema = z.object({
 });
 
 export function ClearSearchForm() {
-  const [pending, setPending] = useState(false);
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchQueryParms = searchParams.get("search");
@@ -51,7 +47,6 @@ export function ClearSearchForm() {
   }
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setPending(true);
     const newSearchQuery = searchParamsToArray?.filter(
       (item) => !data.items.includes(item),
     );
@@ -118,9 +113,7 @@ export function ClearSearchForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={pending}>
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </form>
       </Form>
     </div>
