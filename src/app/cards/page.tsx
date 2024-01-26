@@ -1,6 +1,5 @@
 import { cn } from "lib/utils";
 import { Card } from "../../components/card";
-
 import { api } from "../../trpc/server/trpc-api";
 
 interface PokemonCard {
@@ -11,6 +10,8 @@ interface PokemonCard {
     small: string;
   };
 }
+
+export const dynamicParams = true;
 
 const isBlobData = (blobData: boolean) => {
   if (!blobData) {
@@ -49,8 +50,6 @@ export default async function PokemonPage({
   };
 }) {
   const search = searchParams?.search ?? "";
-
-  console.log("search_params", search);
 
   const data = await GetPokemon(search);
 
