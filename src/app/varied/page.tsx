@@ -1,4 +1,5 @@
 import { Card } from "components/card";
+import { RadioGroup } from "components/forms/radio-group";
 
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
@@ -9,6 +10,9 @@ export default async function VariedPage() {
 
   return (
     <div className="container relative">
+      <div>
+        <RadioGroup />
+      </div>
       {cards && (
         <div className="rounded-md bg-pink-200 p-2">
           <div>
