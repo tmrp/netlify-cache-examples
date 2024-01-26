@@ -21,9 +21,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  search,
 }: Readonly<{
-  search: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -38,7 +36,7 @@ export default async function RootLayout({
           <main className="mx-auto max-w-4xl flex-1">
             <div className="flex flex-col gap-5">
               <MainNavigation />
-              {search}
+
               {children}
             </div>
           </main>

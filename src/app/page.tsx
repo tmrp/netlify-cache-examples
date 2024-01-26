@@ -1,4 +1,6 @@
 import { Card } from "components/card";
+import { ClearSearchForm } from "components/forms/clear-search-from";
+import { SearchForm } from "components/forms/search-form";
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
 import { api } from "trpc/server/trpc-api";
@@ -8,6 +10,10 @@ export default async function HomePage() {
 
   return (
     <div className="container relative">
+      <section className="flex flex-col gap-5">
+        <ClearSearchForm />
+        <SearchForm />
+      </section>
       {cardData && (
         <div className="rounded-md bg-blue-200 p-2">
           <div>
