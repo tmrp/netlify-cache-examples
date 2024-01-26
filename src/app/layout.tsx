@@ -9,7 +9,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "lib/utils";
 import { MainNavigation } from "components/main-navigation";
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
