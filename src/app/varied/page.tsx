@@ -1,5 +1,5 @@
 import { Card } from "components/card";
-import { RadioGroup } from "components/forms/radio-group";
+import { RadioGroup } from "components/radio-group";
 
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
