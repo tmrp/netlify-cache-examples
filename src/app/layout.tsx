@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Create Next App",
 };
 
+export const dynamicParams = true;
+export const dynamic = "auto";
+
 export default async function RootLayout({
   children,
   search,

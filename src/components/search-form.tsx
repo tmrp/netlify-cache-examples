@@ -13,7 +13,8 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 const transformToSearchQuery = (pokemonCard: string) => {
   const searchQuery = pokemonCard.replace(/\s/g, "+");
@@ -28,6 +29,8 @@ const formSchema = z.object({
 
 export const SearchForm = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
@@ -35,6 +38,16 @@ export const SearchForm = () => {
     },
     resolver: zodResolver(formSchema),
   });
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const query = transformToSearchQuery(values?.pokemonCard ?? "");
@@ -44,7 +57,8 @@ export const SearchForm = () => {
       return router.push("/");
     }
 
-    return router.push(`cards?search=${params.toString()}`);
+    router.push(`cards?search=${params.toString()}`);
+    router.refresh();
   }
 
   return (

@@ -17,7 +17,8 @@ import {
 } from "components/ui/form";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { revalidatePath } from "next/cache";
+
+import { useState } from "react";
 
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -26,10 +27,10 @@ const FormSchema = z.object({
 });
 
 export function ClearSearchForm() {
+  const [pending, setPending] = useState(false);
+
   const router = useRouter();
-
   const searchParams = useSearchParams();
-
   const searchQueryParms = searchParams.get("search");
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -50,6 +51,7 @@ export function ClearSearchForm() {
   }
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    setPending(true);
     const newSearchQuery = searchParamsToArray?.filter(
       (item) => !data.items.includes(item),
     );
@@ -116,7 +118,9 @@ export function ClearSearchForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" disabled={pending}>
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
