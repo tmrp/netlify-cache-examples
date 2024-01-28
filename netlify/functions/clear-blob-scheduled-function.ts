@@ -1,18 +1,9 @@
 import { getStore } from "@netlify/blobs";
-import type { Config, Context } from "@netlify/functions";
+import { schedule, type Handler } from "@netlify/functions";
 
 const BLOB_KEY = "pokemonCardsData";
 
-export const config: Config = {
-  schedule: "@daily",
-};
-
-export default async function ClearBlobScheduledFunction(
-  req: Request,
-  context: Context,
-) {
-  const { next_run } = await req.json();
-
+const scheduledFunction: Handler = async () => {
   const blobStore = getStore(BLOB_KEY);
 
   const { blobs } = await blobStore.list();
@@ -22,5 +13,10 @@ export default async function ClearBlobScheduledFunction(
     await blobStore.delete(blob.key);
   }
 
-  console.log("next run", next_run);
-}
+  return {
+    body: JSON.stringify({ message: "Blobs deleted successfully" }),
+    statusCode: 200,
+  };
+};
+
+export const handler = schedule("@daily", scheduledFunction);
