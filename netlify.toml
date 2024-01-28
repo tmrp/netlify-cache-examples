@@ -7,7 +7,7 @@ path = "/varied"
 excludedPath = ["/_next/*"]
 
 [[edge_functions]]
-function = "edge-cache"
+function = "edge-cookie-cache"
 path = "/cookie"
 excludedPath = ["/_next/*"]
 
