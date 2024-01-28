@@ -32,16 +32,4 @@ export const nextRouter = createTRPCRouter({
 
       return input.value;
     }),
-  setCookieQuery: publicProcedure
-    .input(
-      z.object({
-        key: z.string(),
-        value: z.string(),
-      }),
-    )
-    .query(async ({ input }) => {
-      await setCookie(input.key, input.value);
-
-      return input.value;
-    }),
 });
