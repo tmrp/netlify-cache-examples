@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useState } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -12,7 +12,6 @@ const POKEMON_CACHE_KEY = "PokeCache";
 
 export function ToggleCacheCookie() {
   const [loading, setLoading] = useState(false);
-  const [_, startTransition] = useTransition();
 
   const router = useRouter();
 
@@ -29,9 +28,7 @@ export function ToggleCacheCookie() {
         .then(() => {
           setLoading(true);
           toast(`Setting cookie to ${value}`);
-          startTransition(() => {
-            router.refresh();
-          });
+          router.push("/cookie");
         });
     },
     [router, setCookie, setLoading],
