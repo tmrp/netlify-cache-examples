@@ -1,6 +1,6 @@
 import { Toaster } from "components/ui/sonner";
 
-export default function CookieLayout({
+export default function VariedLayout({
   children,
 }: {
   children: React.ReactNode;

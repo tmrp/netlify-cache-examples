@@ -1,10 +1,12 @@
 "use client";
 
-import { apiReact } from "trpc/client/trpc-client-provider";
+import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
+
+import { toast } from "sonner";
+import { TypographyP } from "./typography/typography-p";
 
 const POKEMON_CACHE_KEY = "PokeCache";
 
@@ -23,6 +25,7 @@ export function ToggleCacheCookie() {
       setCookie
         .mutateAsync({ key: POKEMON_CACHE_KEY, value: value })
         .then(() => {
+          toast(`Setting cookie to ${value}`);
           setLoading(true);
         });
 
@@ -33,19 +36,18 @@ export function ToggleCacheCookie() {
 
   const defaultCookie = getSuspenseCookie[0];
 
-  return !loading ? (
-    <RadioGroup
-      onValueChange={handleCookieChange}
-      defaultValue={defaultCookie}
-    />
-  ) : (
-    <div className="flex items-center space-x-4">
-      <Skeleton className="h-12 w-12 rounded-full" />
-      Loading...
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
+  return (
+    <div className="flex w-max flex-col gap-2 rounded-md bg-green-300 p-2">
+      <div className="rounded-md bg-white p-2">
+        <TypographyP>
+          Toogle the cookie to see the difference between cached responses
+        </TypographyP>
       </div>
+      <RadioGroup
+        onValueChange={handleCookieChange}
+        defaultValue={defaultCookie}
+        disabled={loading}
+      />
     </div>
   );
 }

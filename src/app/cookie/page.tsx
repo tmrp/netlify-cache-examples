@@ -3,14 +3,14 @@ import { ToggleCacheCookie } from "components/toggle-cache-cookie";
 
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
-import { api } from "trpc/server/trpc-api";
+import { api } from "server/trpc/server/trpc-api";
 
 export default async function VariedPage() {
   const cards = await api.pokemon.getRandomPokemonCardsByType.query();
 
   return (
     <div className="container relative">
-      <div>
+      <div className="flex flex-col gap-4">
         <ToggleCacheCookie />
         {cards && (
           <div className="rounded-md bg-cyan-200 p-2">
@@ -23,7 +23,7 @@ export default async function VariedPage() {
               </TypographyP>
             </div>
             <ul className="flex flex-row flex-wrap gap-4">
-              {cards.data.map((card) => (
+              {cards?.data?.map((card) => (
                 <li key={card.id}>
                   <Card
                     imageSrc={card.images.small}

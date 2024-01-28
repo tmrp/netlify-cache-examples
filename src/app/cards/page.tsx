@@ -1,6 +1,6 @@
 import { cn } from "lib/utils";
 import { Card } from "../../components/card";
-import { api } from "../../trpc/server/trpc-api";
+import { api } from "../../server/trpc/server/trpc-api";
 import { PokeMonCardSearch } from "components/pokemon-card-search";
 
 interface PokemonCard {
