@@ -40,14 +40,14 @@ export const pokemonRouter = createTRPCRouter({
         await blobStore.setJSON(input.pokemonName, data, {
           metadata: {
             pokemonName: input.pokemonName,
-            timeStamp: new Date().toISOString(),
+            timeStamp: new Date().toUTCString(),
           },
         });
 
         return { ...data, blobData: false };
       }
 
-      return { ...parsedBlob, blobData: true };
+      return { ...parsedBlob, blobData: true, metaData: blob?.metadata };
     }),
 
   getRandomPokemonCardsByType: publicProcedure.query(async ({ ctx }) => {

@@ -8,6 +8,7 @@ import { TrpcClientProvider } from "../server/trpc/client/trpc-client-provider";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "lib/utils";
 import { MainNavigation } from "components/main-navigation";
+import { NavigationMenuDemo } from "components/header-navigation";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -35,7 +36,8 @@ export default async function RootLayout({
         <TrpcClientProvider headers={headers()}>
           <main className="mx-auto max-w-4xl flex-1">
             <div className="flex flex-col gap-5">
-              <MainNavigation />
+              {/* <MainNavigation /> */}
+              <NavigationMenuDemo />
 
               {children}
             </div>

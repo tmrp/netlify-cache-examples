@@ -25,11 +25,10 @@ export function ToggleCacheCookie() {
       setCookie
         .mutateAsync({ key: POKEMON_CACHE_KEY, value: value })
         .then(() => {
+          router.refresh();
           toast(`Setting cookie to ${value}`);
           setLoading(true);
         });
-
-      router.refresh();
     },
     [router, setCookie, setLoading],
   );
@@ -37,7 +36,7 @@ export function ToggleCacheCookie() {
   const defaultCookie = getSuspenseCookie[0];
 
   return (
-    <div className="flex w-max flex-col gap-2 rounded-md bg-green-300 p-2">
+    <div className="flex w-fit flex-col gap-2 rounded-md bg-green-300 p-2">
       <div className="rounded-md bg-white p-2">
         <TypographyP>
           Toogle the cookie to see the difference between cached responses
