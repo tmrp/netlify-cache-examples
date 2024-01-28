@@ -16,14 +16,16 @@ const VALUES = [
 
 interface Props {
   onValueChange: (value: string) => void;
-  defaultValue?: string;
+  defaultValue: string | null;
+  disabled?: boolean;
 }
 
-export function RadioGroup({ defaultValue, onValueChange }: Props) {
+export function RadioGroup({ defaultValue, disabled, onValueChange }: Props) {
   return (
     <RadioGroupUI
       defaultValue={defaultValue ?? VALUES[0].value}
       onValueChange={onValueChange}
+      disabled={disabled}
     >
       {VALUES.map((item) => (
         <div key={item.value} className="flex items-center space-x-2">

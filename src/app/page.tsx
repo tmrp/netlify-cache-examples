@@ -4,7 +4,7 @@ import { SearchForm } from "components/forms/search-form";
 import { PokeMonCardSearch } from "components/pokemon-card-search";
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
-import { api } from "trpc/server/trpc-api";
+import { api } from "server/trpc/server/trpc-api";
 
 export default async function HomePage() {
   const cardData = await api.netlify.onDemand.query();

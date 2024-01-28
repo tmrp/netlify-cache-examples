@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { Toaster } from "components/ui/toaster";
 
 import "../styles/globals.css";
-import { TrpcClientProvider } from "../trpc/client/trpc-client-provider";
+import { TrpcClientProvider } from "../server/trpc/client/trpc-client-provider";
 
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "lib/utils";

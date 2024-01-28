@@ -5,13 +5,17 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
-import { getCookie, setCookie } from "lib/server-actions/cookie-actions";
+import { getCookie, setCookie } from "server/actions/cookie";
 
 export const nextRouter = createTRPCRouter({
   getCookie: publicProcedure
     .input(z.object({ key: z.string() }))
     .query(async ({ input }) => {
       const cookie = await getCookie(input.key);
+
+      if (!cookie) {
+        return null;
+      }
 
       return cookie?.value;
     }),
