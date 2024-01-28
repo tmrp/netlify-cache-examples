@@ -1,4 +1,3 @@
-import { Card } from "components/card";
 import { CardGrid } from "components/card-grid";
 import { ToggleCacheCookie } from "components/toggle-cache-cookie";
 
