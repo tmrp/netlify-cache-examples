@@ -24,15 +24,13 @@ export function ToggleCacheCookie() {
 
   const handleCookieChange = useCallback(
     (value: string) => {
-      setCookie
-        .mutateAsync({ key: POKEMON_CACHE_KEY, value: value })
-        .then(() => {
-          setLoading(true);
-          toast(`Setting cookie to ${value}`);
-        });
+      setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value: value });
+
+      toast(`Setting cookie to ${value}`);
+      setLoading(true);
 
       if (defaultCookie !== value) {
-        return router.refresh();
+        router.refresh();
       }
     },
     [defaultCookie, setCookie, setLoading, router],
