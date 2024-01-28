@@ -5,6 +5,8 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
+const BLOB_KEY = "pokemonCardsData";
+
 export const pokemonRouter = createTRPCRouter({
   getPokemonCardsByName: publicProcedure
     .input(
@@ -13,11 +15,16 @@ export const pokemonRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const blobStore = ctx.netlifyBlobs(input.pokemonName);
-      const blob = await blobStore.get(input.pokemonName);
-      const parsedBlob = await JSON.parse(blob);
+      const blobStore = ctx.netlifyBlobs(BLOB_KEY);
 
-      if (!parsedBlob || !parsedBlob?.data.length) {
+      const blob = await blobStore.getWithMetadata(input.pokemonName);
+
+      console.log("Netlify Data Blob Store:", blobStore);
+      console.log("Netlify Data Blob:", blob);
+
+      const parsedBlob = blob && (await JSON.parse(blob?.data));
+
+      if (!parsedBlob || blob?.metadata.pokemonName !== input.pokemonName) {
         const freshResponse = await fetch(
           `https://api.pokemontcg.io/v2/cards?q=name:${input.pokemonName}`,
           {
@@ -32,14 +39,15 @@ export const pokemonRouter = createTRPCRouter({
 
         await blobStore.setJSON(input.pokemonName, data, {
           metadata: {
-            timeStamp: new Date().toISOString(),
+            pokemonName: input.pokemonName,
+            timeStamp: new Date().toUTCString(),
           },
         });
 
         return { ...data, blobData: false };
       }
 
-      return { ...parsedBlob, blobData: true };
+      return { ...parsedBlob, blobData: true, metaData: blob?.metadata };
     }),
 
   getRandomPokemonCardsByType: publicProcedure.query(async ({ ctx }) => {
