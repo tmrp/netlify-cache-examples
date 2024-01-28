@@ -1,4 +1,5 @@
 import { Card } from "components/card";
+import { CardGrid } from "components/card-grid";
 import { ToggleCacheCookie } from "components/toggle-cache-cookie";
 
 import { TypographyH2 } from "components/typography/typography-h2";
@@ -22,16 +23,7 @@ export default async function VariedPage() {
                 This data was generated on {cards.timeStamp}
               </TypographyP>
             </div>
-            <ul className="flex flex-row flex-wrap gap-4">
-              {cards?.data?.map((card) => (
-                <li key={card.id}>
-                  <Card
-                    imageSrc={card.images.small}
-                    imageAlt={`${card.name} illustrated playing card`}
-                  />
-                </li>
-              ))}
-            </ul>
+            <CardGrid cards={cards.data} />
           </div>
         )}
       </div>

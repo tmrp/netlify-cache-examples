@@ -1,4 +1,5 @@
 import { Card } from "components/card";
+import { CardGrid } from "components/card-grid";
 import { ClearSearchForm } from "components/forms/clear-search-from";
 import { SearchForm } from "components/forms/search-form";
 import { PokeMonCardSearch } from "components/pokemon-card-search";
@@ -26,16 +27,7 @@ export default async function HomePage() {
                 This data was generated on {cardData.timeStamp}
               </TypographyP>
             </div>
-            <ul className="flex flex-row flex-wrap gap-4">
-              {cardData.data.map((card) => (
-                <li key={card.id}>
-                  <Card
-                    imageSrc={card.images.small}
-                    imageAlt={`${card.name} illustrated playing card`}
-                  />
-                </li>
-              ))}
-            </ul>
+            <CardGrid cards={cardData.data} />
           </div>
         )}
       </div>
