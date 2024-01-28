@@ -29,12 +29,13 @@ export function ToggleCacheCookie() {
         .then(() => {
           setLoading(true);
           toast(`Setting cookie to ${value}`);
-          const getCookie = getSuspenseCookie[0];
-
-          if (getCookie !== value) {
-            router.refresh();
-          }
         });
+
+      const getCookie = getSuspenseCookie[0];
+
+      if (getCookie !== value) {
+        return router.refresh();
+      }
     },
     [getSuspenseCookie, setCookie, setLoading, router],
   );
