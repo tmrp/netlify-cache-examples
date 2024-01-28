@@ -25,6 +25,10 @@ const isBlobData = (blobData: boolean) => {
 };
 
 async function GetPokemon(searchQuery: string) {
+  if (!searchQuery) {
+    return null;
+  }
+
   const stringToArray = searchQuery?.split(" ");
 
   const getPokemons = stringToArray?.map(
