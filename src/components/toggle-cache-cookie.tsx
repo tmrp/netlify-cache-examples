@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useTransition } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -12,6 +12,8 @@ const POKEMON_CACHE_KEY = "PokeCache";
 
 export function ToggleCacheCookie() {
   const [loading, setLoading] = useState(false);
+  const [_, startTransition] = useTransition();
+
   const router = useRouter();
 
   const getSuspenseCookie = apiReact.next.getCookie.useSuspenseQuery({
@@ -25,9 +27,11 @@ export function ToggleCacheCookie() {
       setCookie
         .mutateAsync({ key: POKEMON_CACHE_KEY, value: value })
         .then(() => {
-          toast(`Setting cookie to ${value}`);
           setLoading(true);
-          router.refresh();
+          toast(`Setting cookie to ${value}`);
+          startTransition(() => {
+            router.refresh();
+          });
         });
     },
     [router, setCookie, setLoading],
