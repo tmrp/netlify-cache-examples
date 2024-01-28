@@ -24,7 +24,7 @@ export function ToggleVariedValue() {
   );
 
   return (
-    <div className="flex w-max flex-col gap-2 rounded-md bg-blue-300 p-2">
+    <div className="flex w-fit flex-col gap-2 rounded-md bg-blue-300 p-2">
       <div className="rounded-md bg-white p-2">
         <TypographyP>
           Toogle the varied search params to see the difference between cached
