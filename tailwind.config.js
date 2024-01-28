@@ -14,6 +14,7 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+
     extend: {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -71,6 +72,10 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+      },
+      screens: {
+        xs: "480px",
+        xxs: "320px",
       },
     },
   },
