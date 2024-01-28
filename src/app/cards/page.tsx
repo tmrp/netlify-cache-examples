@@ -2,6 +2,7 @@ import { cn } from "lib/utils";
 import { Card } from "../../components/card";
 import { api } from "../../server/trpc/server/trpc-api";
 import { PokeMonCardSearch } from "components/pokemon-card-search";
+import { CardGrid } from "components/card-grid";
 
 interface PokemonCard {
   id: string;
@@ -64,21 +65,12 @@ export default async function PokemonPage({
           <div
             key={index}
             className={cn(
-              "flex w-full flex-row flex-wrap gap-4 rounded-md p-2",
+              "flex flex-col gap-4 rounded-md p-2",
               pokemon?.blobData ? "bg-green-300" : "bg-red-200",
             )}
           >
-            {isBlobData(pokemon?.blobData)}
-            <ul className={cn("flex w-full flex-row flex-wrap gap-4")}>
-              {pokemon?.data?.map((pokemon: PokemonCard) => (
-                <li key={pokemon.id} className="">
-                  <Card
-                    imageSrc={pokemon.images.small}
-                    imageAlt={`${pokemon.name} illustrated playing card`}
-                  />
-                </li>
-              ))}
-            </ul>
+            <div className="flex w-max">{isBlobData(pokemon?.blobData)}</div>
+            <CardGrid cards={pokemon?.data} />
           </div>
         ))}
       </div>
