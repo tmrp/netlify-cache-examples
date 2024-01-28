@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -29,16 +29,19 @@ export function ToggleCacheCookie() {
         .then(() => {
           setLoading(true);
           toast(`Setting cookie to ${value}`);
+          const getCookie = getSuspenseCookie[0];
+
+          if (getCookie !== value) {
+            router.refresh();
+          }
         });
-
-      const getCookie = getSuspenseCookie[0];
-
-      if (getCookie !== value) {
-        router.refresh();
-      }
     },
     [getSuspenseCookie, setCookie, setLoading, router],
   );
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <div className="flex w-fit flex-col gap-2 rounded-md bg-green-300 p-2">
