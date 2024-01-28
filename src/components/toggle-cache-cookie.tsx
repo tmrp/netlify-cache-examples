@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -12,6 +12,7 @@ const POKEMON_CACHE_KEY = "PokeCache";
 
 export function ToggleCacheCookie() {
   const [loading, setLoading] = useState(false);
+  const [selectedCookie, setSelectedCookie] = useState("");
 
   const router = useRouter();
 
@@ -19,22 +20,24 @@ export function ToggleCacheCookie() {
     key: POKEMON_CACHE_KEY,
   });
 
+  const defaultCookie = getSuspenseCookie[0];
   const setCookie = apiReact.next.setCookie.useMutation();
 
   const handleCookieChange = useCallback(
-    (value: string) => {
+    async (value: string) => {
       setCookie
         .mutateAsync({ key: POKEMON_CACHE_KEY, value: value })
         .then(() => {
           setLoading(true);
+          setSelectedCookie(value);
           toast(`Setting cookie to ${value}`);
-          router.push("/cookie");
+
+          console.log("refreshing", selectedCookie, value);
+          router.refresh();
         });
     },
-    [router, setCookie, setLoading],
+    [setCookie, setLoading, router, selectedCookie],
   );
-
-  const defaultCookie = getSuspenseCookie[0];
 
   return (
     <div className="flex w-fit flex-col gap-2 rounded-md bg-green-300 p-2">
