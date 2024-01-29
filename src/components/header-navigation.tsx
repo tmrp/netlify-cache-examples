@@ -70,7 +70,7 @@ export function NavigationMenuDemo() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Special Thanks</NavigationMenuTrigger>
+              <NavigationMenuTrigger>Check out</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
@@ -87,16 +87,22 @@ export function NavigationMenuDemo() {
                         <p className="text-sm leading-tight text-muted-foreground">
                           Made with shadcn/ui.
                           <br></br>
-                          <strong>Pleae checkout the project on GitHub.</strong>
+                          <strong>Checkout the project on GitHub.</strong>
                         </p>
                       </a>
                     </NavigationMenuLink>
                   </li>
                   <ListItem href="https://t3.gg/" title="T3.gg" target="_blank">
-                    Arguably the best way to start a new NextJ application.
+                    Arguably the best way to start a new NextJS application.
                   </ListItem>
                   <ListItem href="https://pokemontcg.io/" title="Pokemon TCG">
                     An amazing API for Pokemon cards.
+                  </ListItem>
+                  <ListItem
+                    href="https://github.com/tmrp/netlify-cache-examples"
+                    title="GitHub"
+                  >
+                    This project is open source and available on GitHub.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>

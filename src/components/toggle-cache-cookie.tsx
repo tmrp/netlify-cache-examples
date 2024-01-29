@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -12,29 +12,25 @@ const POKEMON_CACHE_KEY = "PokeCache";
 
 export function ToggleCacheCookie() {
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  const getSuspenseCookie = apiReact.next.getCookie.useSuspenseQuery({
-    key: POKEMON_CACHE_KEY,
-  });
+  const [suspenseCookieValue, suspenseCookieActions] =
+    apiReact.next.getCookie.useSuspenseQuery({
+      key: POKEMON_CACHE_KEY,
+    });
 
-  const defaultCookie = getSuspenseCookie[0];
   const setCookie = apiReact.next.setCookie.useMutation();
 
   const handleCookieChange = useCallback(
     (value: string) => {
-      setCookie.mutate({ key: POKEMON_CACHE_KEY, value: value });
+      setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value: value });
 
       toast(`Setting cookie to ${value}`);
       setLoading(true);
-
-      if (defaultCookie !== value) {
-        getSuspenseCookie[0] = value;
-        router.refresh();
-      }
+      suspenseCookieActions.refetch();
+      router.refresh();
     },
-    [defaultCookie, getSuspenseCookie, setCookie, setLoading, router],
+    [router, setCookie, suspenseCookieActions],
   );
 
   return (
@@ -46,7 +42,7 @@ export function ToggleCacheCookie() {
       </div>
       <RadioGroup
         onValueChange={handleCookieChange}
-        defaultValue={defaultCookie && defaultCookie}
+        defaultValue={suspenseCookieValue}
         disabled={loading}
       />
     </div>

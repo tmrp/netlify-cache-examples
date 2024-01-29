@@ -5,13 +5,13 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
-import { getCookie, setCookie } from "server/actions/cookie";
+import { cookies } from "next/headers";
 
 export const nextRouter = createTRPCRouter({
   getCookie: publicProcedure
     .input(z.object({ key: z.string() }))
     .query(async ({ input }) => {
-      const cookie = await getCookie(input.key);
+      const cookie = cookies().get(input.key);
 
       if (!cookie) {
         return null;
@@ -27,9 +27,9 @@ export const nextRouter = createTRPCRouter({
         value: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
-      await setCookie(input.key, input.value);
+    .mutation(({ input }) => {
+      cookies().set(input.key, input.value);
 
-      return input.value;
+      return Response.json({}, { status: 200 });
     }),
 });

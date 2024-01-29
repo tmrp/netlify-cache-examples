@@ -1,10 +1,10 @@
-import { getStore } from "@netlify/blobs";
 import { schedule, type Handler } from "@netlify/functions";
+import { netlifyBlobs } from "lib/clients/netlify-blobs";
 
 const BLOB_KEY = "pokemonCardsData";
 
 const scheduledFunction: Handler = async () => {
-  const blobStore = getStore(BLOB_KEY);
+  const blobStore = netlifyBlobs(BLOB_KEY);
 
   const { blobs } = await blobStore.list();
 
