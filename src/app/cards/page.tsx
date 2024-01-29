@@ -1,18 +1,9 @@
 import { cn } from "lib/utils";
-import { Card } from "../../components/card";
+
 import { api } from "../../server/trpc/server/trpc-api";
 import { PokeMonCardSearch } from "components/pokemon-card-search";
 import { CardGrid } from "components/card-grid";
 import { TypographyP } from "components/typography/typography-p";
-
-interface PokemonCard {
-  id: string;
-  name: string;
-  images: {
-    large: string;
-    small: string;
-  };
-}
 
 export const dynamicParams = true;
 
