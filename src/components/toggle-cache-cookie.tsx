@@ -24,21 +24,18 @@ export function ToggleCacheCookie() {
 
   const handleCookieChange = useCallback(
     (value: string) => {
-      setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value: value });
+      setCookie.mutate({ key: POKEMON_CACHE_KEY, value: value });
 
       toast(`Setting cookie to ${value}`);
       setLoading(true);
 
       if (defaultCookie !== value) {
+        getSuspenseCookie[0] = value;
         router.refresh();
       }
     },
-    [defaultCookie, setCookie, setLoading, router],
+    [defaultCookie, getSuspenseCookie, setCookie, setLoading, router],
   );
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   return (
     <div className="flex w-fit flex-col gap-2 rounded-md bg-green-300 p-2">
@@ -49,7 +46,7 @@ export function ToggleCacheCookie() {
       </div>
       <RadioGroup
         onValueChange={handleCookieChange}
-        defaultValue={defaultCookie}
+        defaultValue={defaultCookie && defaultCookie}
         disabled={loading}
       />
     </div>
