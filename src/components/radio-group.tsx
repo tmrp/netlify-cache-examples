@@ -16,7 +16,7 @@ const VALUES = [
 
 interface Props {
   onValueChange: (value: string) => void;
-  defaultValue: string | null;
+  defaultValue: string | undefined | null;
   disabled?: boolean;
 }
 
