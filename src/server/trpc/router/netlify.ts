@@ -5,12 +5,15 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+import { headers } from "next/headers";
 
 export const netlifyRouter = createTRPCRouter({
   onDemand: publicProcedure.query(async ({ ctx }) => {
+    const headersList = headers();
+    const origin = headersList.get("host");
+
     const response = await fetch(
-      `${BASE_URL}/.netlify/builders/on-demand-builder`,
+      `${origin}/.netlify/builders/on-demand-builder`,
     );
 
     const cardDataScheme = z.object({
