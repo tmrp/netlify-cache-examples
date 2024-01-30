@@ -6,6 +6,7 @@ import {
 } from "../server/trpc-server-config";
 
 import { cookies } from "next/headers";
+import { getOrigin } from "server/actions/origin";
 
 export const nextRouter = createTRPCRouter({
   getCookie: publicProcedure
@@ -19,6 +20,10 @@ export const nextRouter = createTRPCRouter({
 
       return cookie?.value;
     }),
+
+  getOrigin: publicProcedure.query(async () => {
+    return await getOrigin();
+  }),
 
   setCookie: publicProcedure
     .input(
