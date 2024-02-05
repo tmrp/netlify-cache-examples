@@ -5,13 +5,17 @@ import {
   publicProcedure,
 } from "../server/trpc-server-config";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+import { headers } from "next/headers";
 
 export const netlifyRouter = createTRPCRouter({
   onDemand: publicProcedure.query(async ({ ctx }) => {
-    const response = await fetch(
-      `${BASE_URL}/.netlify/builders/on-demand-builder`,
-    );
+    const headersList = headers();
+    const host = headersList.get("host");
+    const protocol = headersList.get("x-forwarded-proto");
+
+    const base = `${protocol}://${host}`;
+
+    const response = await fetch(`${base}/.netlify/builders/on-demand-builder`);
 
     const cardDataScheme = z.object({
       data: z.array(
