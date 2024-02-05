@@ -10,11 +10,12 @@ import { headers } from "next/headers";
 export const netlifyRouter = createTRPCRouter({
   onDemand: publicProcedure.query(async ({ ctx }) => {
     const headersList = headers();
-    const origin = headersList.get("host");
+    const host = headersList.get("host");
+    const protocol = headersList.get("x-forwarded-proto");
 
-    const response = await fetch(
-      `${origin}/.netlify/builders/on-demand-builder`,
-    );
+    const base = `${protocol}://${host}`;
+
+    const response = await fetch(`${base}/.netlify/builders/on-demand-builder`);
 
     const cardDataScheme = z.object({
       data: z.array(
