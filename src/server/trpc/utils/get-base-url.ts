@@ -1,11 +1,5 @@
-"use client";
-
-import { apiReact } from "../client/trpc-client-provider";
-
 export function getBaseUrl() {
   if (typeof window !== "undefined") return "";
-
-  const origin = apiReact.next.getOrigin.useQuery();
-
-  return origin.data;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  return `http://localhost:${process.env.PORT ?? 8888}`;
 }
