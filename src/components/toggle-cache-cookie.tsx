@@ -10,27 +10,33 @@ import { TypographyP } from "./typography/typography-p";
 
 const POKEMON_CACHE_KEY = "PokeCache";
 
-export function ToggleCacheCookie() {
+interface ToggleCacheCookieProps {
+  data?: string;
+}
+
+export function ToggleCacheCookie({ data }: ToggleCacheCookieProps) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  const [data] = apiReact.next.getCookie.useSuspenseQuery({
-    key: POKEMON_CACHE_KEY,
-  });
-
   const setCookie = apiReact.next.setCookie.useMutation();
+  const [cookieValue, cookieOptions] = apiReact.next.getCookie.useSuspenseQuery(
+    {
+      key: POKEMON_CACHE_KEY,
+    },
+  );
 
   const handleSubmit = useCallback(
     (value: string) => {
       setLoading(true);
       startTransition(() => {
-        setCookie.mutate({ key: POKEMON_CACHE_KEY, value });
+        setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value });
         toast(`Cookie set to ${value}`);
+        cookieOptions.refetch();
         router.refresh();
       });
     },
-    [router, setCookie],
+    [cookieOptions, router, setCookie],
   );
 
   return (
