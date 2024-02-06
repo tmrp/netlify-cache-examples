@@ -10,7 +10,9 @@ const DEFAULT_CACHE_VALUE = "foo";
 
 export default async function VariedPage() {
   const cards = await api.pokemon.getRandomPokemonCardsByType.query();
-  const cacheCookie = await api.next.getCookie.query({ key: "PokeCache" });
+  const cacheCookie = await api.next.getCookie.query({
+    key: POKEMON_CACHE_KEY,
+  });
   const setCookie = await api.next.setCookie.mutate({
     key: POKEMON_CACHE_KEY,
     value: DEFAULT_CACHE_VALUE,
