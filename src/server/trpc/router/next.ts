@@ -27,9 +27,9 @@ export const nextRouter = createTRPCRouter({
         value: z.string(),
       }),
     )
-    .mutation(({ input }) => {
-      cookies().set(input.key, input.value);
+    .mutation(async ({ input }) => {
+      await cookies().set(input.key, input.value);
 
-      return Response.json({}, { status: 200 });
+      return await Response.json({}, { status: 200 });
     }),
 });
