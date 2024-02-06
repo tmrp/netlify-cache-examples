@@ -25,7 +25,7 @@ export function ToggleCacheCookie() {
     (value: string) => {
       setLoading(true);
       startTransition(() => {
-        setCookie.mutate({ key: POKEMON_CACHE_KEY, value });
+        setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value });
         toast(`Cookie set to ${value}`);
         router.refresh();
       });
