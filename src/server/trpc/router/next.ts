@@ -30,6 +30,7 @@ export const nextRouter = createTRPCRouter({
     .mutation(({ input }) => {
       cookies().set({
         name: input.key,
+        sameSite: "lax",
         value: input.value,
       });
 
