@@ -29,9 +29,7 @@ export const nextRouter = createTRPCRouter({
     )
     .mutation(({ input }) => {
       cookies().set({
-        httpOnly: true,
         name: input.key,
-        sameSite: "lax",
         value: input.value,
       });
 
