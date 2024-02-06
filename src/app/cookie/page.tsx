@@ -5,13 +5,24 @@ import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
 import { api } from "server/trpc/server/trpc-api";
 
+const POKEMON_CACHE_KEY = "PokeCache";
+
 export default async function VariedPage() {
   const cards = await api.pokemon.getRandomPokemonCardsByType.query();
+  const cacheCookie = await api.next.getCookie.query({ key: "PokeCache" });
+  const setCookie = await api.next.setCookie.mutate({
+    key: POKEMON_CACHE_KEY,
+    value: "foo",
+  });
+
+  if (!cacheCookie) {
+    setCookie;
+  }
 
   return (
     <div className="container relative">
       <div className="flex flex-col gap-4">
-        <ToggleCacheCookie />
+        <ToggleCacheCookie data={cacheCookie ?? ""} />
         {cards && (
           <div className="rounded-md bg-cyan-200 p-2">
             <div>
