@@ -6,8 +6,6 @@ import {
   RadioGroupItem,
 } from "components/ui/radio-group";
 
-import React from "react";
-
 const VALUES = [
   { label: "Foo", value: "foo" },
   { label: "Bar", value: "bar" },
