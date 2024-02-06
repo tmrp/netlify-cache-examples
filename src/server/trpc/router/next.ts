@@ -31,6 +31,7 @@ export const nextRouter = createTRPCRouter({
       cookies().set({
         httpOnly: true,
         name: input.key,
+        sameSite: "lax",
         value: input.value,
       });
 
