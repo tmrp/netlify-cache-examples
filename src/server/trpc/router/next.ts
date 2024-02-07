@@ -32,5 +32,7 @@ export const nextRouter = createTRPCRouter({
         name: input.key,
         value: input.value,
       });
+
+      return Response.json({}, { status: 200 });
     }),
 });
