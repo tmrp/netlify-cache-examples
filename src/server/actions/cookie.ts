@@ -7,5 +7,7 @@ export async function getCookie(key: string) {
 }
 
 export async function setCookie(key: string, value: string) {
-  cookies().set({ httpOnly: true, name: key, value });
+  cookies().set({ name: key, value });
+
+  return Response.json({}, { status: 200 });
 }

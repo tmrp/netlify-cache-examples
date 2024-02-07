@@ -16,27 +16,20 @@ interface ToggleCacheCookieProps {
 
 export function ToggleCacheCookie({ data }: ToggleCacheCookieProps) {
   const [loading, setLoading] = useState(false);
+  const setCookie = apiReact.next.setCookie.useMutation();
 
   const router = useRouter();
 
-  const setCookie = apiReact.next.setCookie.useMutation();
-  const [cookieValue, cookieOptions] = apiReact.next.getCookie.useSuspenseQuery(
-    {
-      key: POKEMON_CACHE_KEY,
-    },
-  );
-
   const handleSubmit = useCallback(
-    (value: string) => {
+    async (value: string) => {
       setLoading(true);
       startTransition(() => {
-        setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value });
+        setCookie.mutate({ key: POKEMON_CACHE_KEY, value });
         toast(`Cookie set to ${value}`);
-        cookieOptions.refetch();
         router.refresh();
       });
     },
-    [cookieOptions, router, setCookie],
+    [router, setCookie],
   );
 
   return (

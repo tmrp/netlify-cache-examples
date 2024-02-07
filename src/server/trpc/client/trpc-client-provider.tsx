@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useRef } from 'react';
-import { httpBatchLink } from '@trpc/client';
-import { createTRPCReact } from '@trpc/react-query';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { transformer } from '../utils/transformer';
+import React, { useRef } from "react";
+import { httpBatchLink } from "@trpc/client";
+import { createTRPCReact } from "@trpc/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { transformer } from "../utils/transformer";
 
-import { trpcRouter } from '../types';
-import { getUrl } from '../utils/get-url';
+import { trpcRouter } from "../types";
+import { getUrl } from "../utils/get-url";
 
 export const apiReact = createTRPCReact<trpcRouter>({});
 
@@ -24,16 +24,22 @@ export const TrpcClientProvider: React.FC<TrpcClientProviderProps> = ({
     apiReact.createClient({
       links: [
         httpBatchLink({
+          fetch(url, options) {
+            return fetch(url, {
+              ...options,
+              credentials: "include",
+            });
+          },
           headers() {
             const heads = new Map(headers);
-            heads.set('x-trpc-source', 'react');
+            heads.set("x-trpc-source", "react");
             return Object.fromEntries(heads);
           },
           url: getUrl(),
         }),
       ],
       transformer,
-    })
+    }),
   );
 
   return (
