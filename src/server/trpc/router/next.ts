@@ -27,13 +27,10 @@ export const nextRouter = createTRPCRouter({
         value: z.string(),
       }),
     )
-    .mutation(({ input }) => {
+    .mutation(async ({ input }) => {
       cookies().set({
         name: input.key,
-        sameSite: "lax",
         value: input.value,
       });
-
-      return Response.json({}, { status: 200 });
     }),
 });
