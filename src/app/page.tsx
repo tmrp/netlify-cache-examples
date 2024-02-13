@@ -1,7 +1,5 @@
-import { Card } from "components/card";
 import { CardGrid } from "components/card-grid";
-import { ClearSearchForm } from "components/forms/clear-search-from";
-import { SearchForm } from "components/forms/search-form";
+
 import { PokeMonCardSearch } from "components/pokemon-card-search";
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
