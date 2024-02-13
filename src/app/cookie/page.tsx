@@ -3,7 +3,6 @@ import { ToggleCacheCookie } from "components/toggle-cache-cookie";
 
 import { TypographyH2 } from "components/typography/typography-h2";
 import { TypographyP } from "components/typography/typography-p";
-import { getCookie } from "server/actions/cookie";
 import { api } from "server/trpc/server/trpc-api";
 
 const POKEMON_CACHE_KEY = "PokeCache";
