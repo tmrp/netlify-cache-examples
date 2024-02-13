@@ -58,12 +58,16 @@ export const pokemonRouter = createTRPCRouter({
         }),
       ),
     )
-    .query(async ({ ctx }) => {
+    .query(async ({ ctx, input }) => {
       const getTypes = await fetch("https://api.pokemontcg.io/v2/types", {
-        headers: {
-          ...ctx.headers,
-        },
+        headers: input?.headers,
       });
+
+      if (input?.headers) {
+        Object.entries(input.headers).forEach(([key, value]) => {
+          getTypes.headers.set(key, value);
+        });
+      }
 
       const typesResponse = await getTypes.json();
 
@@ -74,7 +78,16 @@ export const pokemonRouter = createTRPCRouter({
 
       const getCardsByType = await fetch(
         `https://api.pokemontcg.io/v2/cards?q=types:${randomType}&page=1&pageSize=10`,
+        {
+          headers: input?.headers,
+        },
       );
+
+      if (input?.headers) {
+        Object.entries(input.headers).forEach(async ([key, value]) => {
+          getCardsByType.headers.set(key, value);
+        });
+      }
 
       const data = await getCardsByType.json();
 
