@@ -90,6 +90,11 @@ export const pokemonRouter = createTRPCRouter({
 
       const timeStamp = new Date().toUTCString();
 
-      return { ...cards, randomType, timeStamp, ...input?.headers };
+      return {
+        ...cards,
+        headers: { ...input?.headers },
+        randomType,
+        timeStamp,
+      };
     }),
 });
