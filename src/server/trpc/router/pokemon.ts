@@ -50,51 +50,45 @@ export const pokemonRouter = createTRPCRouter({
       return { ...parsedBlob, blobData: true, metaData: blob?.metadata };
     }),
 
-  getRandomPokemonCardsByType: publicProcedure
-    .input(
-      z.optional(
+  getRandomPokemonCardsByType: publicProcedure.query(async () => {
+    const getTypes = await fetch("https://api.pokemontcg.io/v2/types");
+
+    const typesResponse = await getTypes.json();
+
+    const randomType =
+      typesResponse.data[Math.floor(Math.random() * typesResponse.data.length)];
+
+    const getCardsByType = await fetch(
+      `https://api.pokemontcg.io/v2/cards?q=types:${randomType}&page=1&pageSize=10`,
+    );
+
+    const data = await getCardsByType.json();
+
+    const cardDataScheme = z.object({
+      data: z.array(
         z.object({
-          headers: z.record(z.string(), z.string()),
+          id: z.string(),
+          images: z.object({
+            small: z.string(),
+          }),
+          name: z.string(),
         }),
       ),
-    )
-    .query(async ({ ctx, input }) => {
-      const getTypes = await fetch("https://api.pokemontcg.io/v2/types");
+    });
 
-      const typesResponse = await getTypes.json();
+    const cards = cardDataScheme.parse(await data);
 
-      const randomType =
-        typesResponse.data[
-          Math.floor(Math.random() * typesResponse.data.length)
-        ];
+    const timeStamp = new Date().toUTCString();
 
-      const getCardsByType = await fetch(
-        `https://api.pokemontcg.io/v2/cards?q=types:${randomType}&page=1&pageSize=10`,
-      );
-
-      const data = await getCardsByType.json();
-
-      const cardDataScheme = z.object({
-        data: z.array(
-          z.object({
-            id: z.string(),
-            images: z.object({
-              small: z.string(),
-            }),
-            name: z.string(),
-          }),
-        ),
-      });
-
-      const cards = cardDataScheme.parse(await data);
-
-      const timeStamp = new Date().toUTCString();
-
-      return {
-        ...cards,
-        headers: { ...input?.headers },
-        randomType,
-        timeStamp,
-      };
-    }),
+    return {
+      ...cards,
+      headers: {
+        "Cache-Control": "public, max-age=300",
+        "Netlify-CDN-Cache-Control": "public, max-age=300",
+        "Netlify-Vary": "query",
+      },
+      randomType,
+      timeStamp,
+    };
+  }),
 });

@@ -9,13 +9,7 @@ const POKEMON_CACHE_KEY = "PokeCache";
 const DEFAULT_CACHE_VALUE = "foo";
 
 export default async function VariedPage() {
-  const cards = await api.pokemon.getRandomPokemonCardsByType.query({
-    headers: {
-      "Cache-Control": "public, max-age=300",
-      "Netlify-CDN-Cache-Control": "public, max-age=300",
-      "Netlify-Vary": "cookie=PokeCache",
-    },
-  });
+  const cards = await api.pokemon.getRandomPokemonCardsByType.query();
 
   const cacheCookie = await api.next.getCookie.query({
     key: POKEMON_CACHE_KEY,
