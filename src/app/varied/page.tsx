@@ -1,4 +1,3 @@
-import { Card } from "components/card";
 import { CardGrid } from "components/card-grid";
 
 import { ToggleVariedValue } from "components/toggle-varied-value";
@@ -8,7 +7,13 @@ import { TypographyP } from "components/typography/typography-p";
 import { api } from "server/trpc/server/trpc-api";
 
 export default async function VariedPage() {
-  const cards = await api.pokemon.getRandomPokemonCardsByType.query();
+  const cards = await api.pokemon.getRandomPokemonCardsByType.query({
+    headers: {
+      "Cache-Control": "public, max-age=300",
+      "Netlify-CDN-Cache-Control": "public, max-age=300",
+      "Netlify-Vary": "query",
+    },
+  });
 
   return (
     <div className="container relative">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RadioGroup } from "./radio-group";
 import { TypographyP } from "./typography/typography-p";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -22,6 +22,10 @@ export function ToggleVariedValue() {
     },
     [router],
   );
+
+  useEffect(() => {
+    setLoading(false);
+  }, [searchParams]);
 
   return (
     <div className="flex w-fit flex-col gap-2 rounded-md bg-blue-300 p-2">
