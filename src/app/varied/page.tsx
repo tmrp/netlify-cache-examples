@@ -7,13 +7,7 @@ import { TypographyP } from "components/typography/typography-p";
 import { api } from "server/trpc/server/trpc-api";
 
 export default async function VariedPage() {
-  const cards = await api.pokemon.getRandomPokemonCardsByType.query({
-    headers: {
-      "Cache-Control": "public, max-age=300",
-      "Netlify-CDN-Cache-Control": "public, max-age=300",
-      "Netlify-Vary": "query",
-    },
-  });
+  const cards = await api.pokemon.getRandomPokemonCardsByType.query();
 
   return (
     <div className="container relative">
