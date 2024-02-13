@@ -50,7 +50,7 @@ export const pokemonRouter = createTRPCRouter({
       return { ...parsedBlob, blobData: true, metaData: blob?.metadata };
     }),
 
-  getRandomPokemonCardsByType: publicProcedure.query(async () => {
+  getRandomPokemonCardsByType: publicProcedure.query(async ({ ctx }) => {
     const getTypes = await fetch("https://api.pokemontcg.io/v2/types");
 
     const typesResponse = await getTypes.json();
@@ -80,13 +80,12 @@ export const pokemonRouter = createTRPCRouter({
 
     const timeStamp = new Date().toUTCString();
 
+    ctx.headers.set("Cache-Control", "public, max-age=300");
+    ctx.headers.set("Netlify-CDN-Cache-Control", "public, max-age=300");
+    ctx.headers.set("Netlify-Vary", "query");
+
     return {
       ...cards,
-      headers: {
-        "Cache-Control": "public, max-age=300",
-        "Netlify-CDN-Cache-Control": "public, max-age=300",
-        "Netlify-Vary": "query",
-      },
       randomType,
       timeStamp,
     };
