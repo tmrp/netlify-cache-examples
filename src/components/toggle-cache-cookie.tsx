@@ -3,7 +3,7 @@
 import { apiReact } from "server/trpc/client/trpc-client-provider";
 import { RadioGroup } from "./radio-group";
 import { useRouter } from "next/navigation";
-import { startTransition, useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 import { TypographyP } from "./typography/typography-p";
@@ -23,14 +23,17 @@ export function ToggleCacheCookie({ data }: ToggleCacheCookieProps) {
   const handleSubmit = useCallback(
     async (value: string) => {
       setLoading(true);
-      startTransition(() => {
-        setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value });
-        toast(`Cookie set to ${value}`);
-        router.refresh();
-      });
+      setCookie.mutateAsync({ key: POKEMON_CACHE_KEY, value });
+      toast(`Cookie set to ${value}`);
+      router.refresh();
+      setLoading(false);
     },
     [router, setCookie],
   );
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <div className="flex w-fit flex-col gap-2 rounded-md bg-green-300 p-2">

@@ -1,16 +1,6 @@
 [[plugins]]
 package = "@netlify/plugin-nextjs"
 
-[[edge_functions]]
-function = "edge-cache"
-path = "/varied"
-excludedPath = ["/_next/*"]
-
-[[edge_functions]]
-function = "edge-cookie-cache"
-path = "/cookie"
-excludedPath = ["/_next/*"]
-
 [dev]
 targetPort = 3000
 edge_functions = "netlify/edge-functions"
